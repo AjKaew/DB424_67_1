@@ -4,14 +4,61 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lab 7</title>
+    <style>
+      #error {
+        background-color: lightcoral;
+        color: red;
+      }
+    </style>
 </head>
 <body>
-  <form action="signup.php" method="POST">
-    <input type="text" name="username" placeholder="Username" 
+  <!-- <form action="signup.php" method="POST"> -->
+  <h3 id="error"></h3>
+  <form method="post" onsubmit="sign_up(event)">
+    <!-- <input type="text" name="username" placeholder="Username" 
+      required> -->
+    <select id="username" name="username" placeholder="Username" 
       required>
-    <input type="password" name="password" 
+      <!-- <option>123456</option> -->
+    </select>
+    <input id="password" type="password" name="password" 
       placeholder="Password" required>
     <button type="submit" name="signup">Sign Up</button>
-  </form>    
+  </form>  
+  <script>
+    function sign_up(event) {
+      event.preventDefault();
+      const body = new FormData()
+      body.set('username', document.getElementById('username').value)
+      body.set('password', document.getElementById('password').value)
+      fetch('./api/signup.php', 
+            {
+              method: 'POST',
+              body
+            }
+      )
+      .then((response)=>{
+        if (response.status == 201) {
+          location.href = 'signin.html';
+        }
+        response.json();
+      })
+      .then((data)=>{
+        document.getElementById('error').innerHTML 
+        = data['message']; 
+      });
+    }
+
+    fetch('./api/student-id.php')
+    .then((response)=>response.json())
+    .then((data)=>{
+      // console.log(data);
+      let options = '';
+      for (let id  of data) {
+        options += `<option>${id['studentID']}</option>`;
+      }
+      document.getElementById('username').innerHTML = options;
+    });
+  </script>  
 </body>
 </html>
