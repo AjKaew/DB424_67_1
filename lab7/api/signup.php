@@ -1,7 +1,7 @@
 <?php
 require '../db.php';
 
-// if (isset($_POST['signup'])) {
+if (isset($_POST['signup'])) {
   $username = $_POST['username'];
   $password = password_hash(
     $_POST['password'],
@@ -23,19 +23,19 @@ require '../db.php';
       $stmt->bind_param('ss', $username, $password);
       $stmt->execute();
       http_response_code(201);
-      echo json_encode(['message'=>'Success']);
+      echo 'Success';
       // echo 'Success';
     }
     else {
       http_response_code(400);
-      echo json_encode(['message'=>'Student ID not found.']);
+      echo 'Student ID not found.';
       // echo 'Student ID not found.';
     }
   }
   catch (Exception $e) {
     http_response_code(500);
-    echo json_encode(['message'=>'Server error.']);
+    echo 'Server error.';
     // echo $e->getMessage();
   }
-// }
+}
 ?>
