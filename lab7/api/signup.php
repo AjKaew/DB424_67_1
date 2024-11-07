@@ -24,18 +24,19 @@ if (isset($_POST['signup'])) {
       $stmt->execute();
       http_response_code(201);
       echo 'Success';
-      // echo 'Success';
     }
     else {
       http_response_code(400);
       echo 'Student ID not found.';
-      // echo 'Student ID not found.';
     }
   }
-  catch (Exception $e) {
+  catch (Exception) {
     http_response_code(500);
     echo 'Server error.';
-    // echo $e->getMessage();
   }
+}
+else {
+  http_response_code(401);
+  echo "Unauthorized."
 }
 ?>
