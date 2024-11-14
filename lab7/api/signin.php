@@ -46,6 +46,6 @@ if (isset($_POST['signin'])) {
 }
 else {
   http_response_code(401);
-  echo "Unauthorized."
+  echo "Unauthorized.";
 }
 ?>
